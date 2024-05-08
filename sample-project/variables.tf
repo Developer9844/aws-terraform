@@ -25,3 +25,6 @@ variable "az_private_cidr" {
   type    = list(string)
   default = ["10.0.3.0/24", "10.0.4.0/24"]
 }
+
+# variables for SSH key
+variable "key_name" {}
