@@ -120,8 +120,8 @@ resource "aws_route_table_association" "private_subnet_route_2" {
 resource "aws_eip" "elastic_ip" {}
 
 resource "aws_nat_gateway" "nat_gateway" {
-  allocation_id = aws_eip.elastic_ip
-  subnet_id     = aws_subnet.public-subnet-1
+  allocation_id = aws_eip.elastic_ip.id
+  subnet_id     = aws_subnet.public-subnet-1.id
   tags = {
     Name = "nat_gateway"
   }
@@ -132,4 +132,38 @@ resource "aws_route" "nat_gateway_route" {
   route_table_id         = aws_route_table.private-rt.id
   nat_gateway_id         = aws_nat_gateway.nat_gateway.id
   destination_cidr_block = "0.0.0.0/0"
+}
+
+
+
+
+# security group
+resource "aws_security_group" "s_g" {
+  vpc_id = aws_vpc.my-vpc.id
+
+  tags = {
+    Name = "demo-security-group"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "ingress_rule" {
+  security_group_id = aws_security_group.s_g.id
+  ip_protocol       = "tcp"
+  cidr_ipv4         = aws_vpc.my-vpc.cidr_block
+  from_port         = 22
+  to_port           = 22
+
+}
+
+resource "aws_vpc_security_group_egress_rule" "egress_rule_ipv4" {
+  security_group_id = aws_security_group.s_g.id
+  ip_protocol       = -1
+  cidr_ipv4         = "0.0.0.0/0"
+
+}
+resource "aws_vpc_security_group_egress_rule" "egress_rule_ipv6" {
+  security_group_id = aws_security_group.s_g.id
+  ip_protocol       = -1
+  cidr_ipv6         = "::/0"
+
 }

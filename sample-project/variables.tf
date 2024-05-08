@@ -28,3 +28,12 @@ variable "az_private_cidr" {
 
 # variables for SSH key
 variable "key_name" {}
+
+# variables for ec2 instace
+
+variable "instance_type" {}
+variable "associate_public_ip_address" {
+  default = true
+}
+
+variable "ami" {}
