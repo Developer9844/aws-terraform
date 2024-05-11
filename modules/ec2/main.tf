@@ -5,6 +5,6 @@ resource "aws_instance" "ec2_instance" {
   availability_zone           = var.availability_zone[0]
   key_name                    = var.key_name
   subnet_id                   = var.subnet_id
-  security_groups             = var.sg_id
+  security_groups             = [var.sg_id] # we [] this for avoid "string" error
 }
 

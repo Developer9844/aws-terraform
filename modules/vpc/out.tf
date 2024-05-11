@@ -35,3 +35,7 @@ output "internet_gateway" {
 output "nat_gateway_ip" {
   value = aws_nat_gateway.nat_gateway.public_ip
 }
+
+output "sg_id" {
+  value = aws_security_group.s_g.id
+}
