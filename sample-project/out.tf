@@ -8,11 +8,4 @@ output "public_key" {
 }
 
 
-output "subnet_id" {
-  value = module.vpc_demo.subnet_id
-}
-
-output "sg_id" {
-  value = module.vpc_demo.sg_id
-}
 

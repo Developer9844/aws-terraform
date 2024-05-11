@@ -7,7 +7,6 @@ module "vpc_demo" {
   cidr_block      = var.cidr_block
   az_public_cidr  = var.az_public_cidr
   az_private_cidr = var.az_private_cidr
-
 }
 
 module "ssh_key" {
