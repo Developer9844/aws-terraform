@@ -8,4 +8,11 @@ output "public_key" {
 }
 
 
+# we have out the values in the module out.tf file
+output "eks_cluster_id" {
+  value = module.eks_cluster.eks_cluster_id
+}
 
+output "eks_cluster_endpoint" {
+  value = module.eks_cluster.eks_cluster_endpoint
+}

@@ -13,6 +13,8 @@ variable "availability_zone" {
   default = ["us-east-1a", "us-east-1b"]
 }
 
-variable "subnet_id" {}
+variable "subnet_ids" {
+  type = list(string)
+}
 
 variable "sg_id" {}

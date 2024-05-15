@@ -4,7 +4,7 @@ terraform {
     bucket  = "ankush-bucket-for-terraform"
     key     = "sample-project.tfstate"
     region  = "us-east-1"
-    profile = "default"
+    profile = "my_personal_aws"
   }
 }
 
