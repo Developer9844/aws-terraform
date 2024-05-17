@@ -7,3 +7,6 @@ variable "node_group_name" {
   default = "demo_node_group"
 }
 variable "sg_id" {}
+
+
+

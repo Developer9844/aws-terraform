@@ -10,19 +10,19 @@ module "vpc_demo" {
 
 }
 
-module "ssh_key" {
-  source   = "../modules/ssh_key"
-  key_name = var.key_name
-}
+# module "ssh_key" {
+#   source   = "../modules/ssh_key"
+#   key_name = var.key_name
+# }
 
-module "ec2_instance" {
-  source        = "../modules/ec2"
-  instance_type = var.instance_type
-  ami           = var.ami
-  key_name      = var.key_name
-  subnet_ids    = module.vpc_demo.subnet_ids
-  sg_id         = module.vpc_demo.sg_id
-}
+# module "ec2_instance" {
+#   source        = "../modules/ec2"
+#   instance_type = var.instance_type
+#   ami           = var.ami
+#   key_name      = var.key_name
+#   subnet_ids    = module.vpc_demo.subnet_ids
+#   sg_id         = module.vpc_demo.sg_id
+# }
 
 
 
