@@ -1,5 +1,6 @@
 module "eks_iam" {
-  source = "./eks_iam"
+  source       = "./eks_iam"
+  project_name = var.project_name
 
 }
 
