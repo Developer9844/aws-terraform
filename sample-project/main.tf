@@ -31,4 +31,5 @@ module "eks_cluster" {
   node_group_name    = var.node_group_name
   private_subnet_ids = module.vpc_demo.private_subnet_ids
   sg_id              = module.vpc_demo.sg_id
+  project_name       = var.project_name
 }
