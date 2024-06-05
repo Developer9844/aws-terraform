@@ -33,3 +33,10 @@ module "eks_cluster" {
   sg_id              = module.vpc_demo.sg_id
   project_name       = var.project_name
 }
+
+
+# module "karpenter" {
+#   source       = "../modules/karpenter"
+#   cluster_name = var.cluster_name
+#   project_name = var.project_name
+# }
