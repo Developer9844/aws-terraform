@@ -209,21 +209,28 @@ resource "helm_release" "karpenter" {
 ##########################################################################
 
 # provider "kubernetes" {
-#   config_path = "~/.kube/config"
+#   host                   = aws_eks_cluster.demo_cluster.endpoint
+#   cluster_ca_certificate = base64decode(aws_eks_cluster.demo_cluster.certificate_authority[0].data)
+
+#   exec {
+#     api_version = "client.authentication.k8s.io/v1beta1"
+#     args        = ["--profile", var.aws_profile, "eks", "get-token", "--cluster-name", aws_eks_cluster.demo_cluster.name, "--region", "us-east-1"]
+#     command     = "aws"
+#   }
 # }
 
-# resource "kubernetes_manifest" "karpenter_nodepools" {
-#   manifest = yamldecode(file("${path.module}/karpenter.sh_nodepools.yaml"))
+# locals {
+#   crd_files = [
+#     "~/Downloads/terraform/modules/karpenter/crds/ec2nodeclasses.yaml",
+#     "~/Downloads/terraform/modules/karpenter/crds/nodeclaims.yaml",
+#     "~/Downloads/terraform/modules/karpenter/crds/nodepools.yaml"
+#   ]
 # }
 
-# resource "kubernetes_manifest" "karpenter_ec2nodeclasses" {
-#   manifest = yamldecode(file("${path.module}/karpenter.k8s.aws_ec2nodeclasses.yaml"))
-# }
+# resource "kubernetes_manifest" "crds" {
+#   for_each = { for index_of_each, file_path in local.crd_files : index_of_each => file_path }
 
-# resource "kubernetes_manifest" "karpenter_nodeclaims" {
-#   manifest = yamldecode(file("${path.module}/karpenter.sh_nodeclaims.yaml"))
-# }
+#   manifest   = yamldecode(file(each.value))
+#   depends_on = [aws_eks_cluster.demo_cluster]
 
-# resource "kubernetes_manifest" "karpenter" {
-#   manifest = yamldecode(file("${path.module}/karpenter.yaml"))
 # }
