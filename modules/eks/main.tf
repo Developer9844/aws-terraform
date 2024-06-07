@@ -188,17 +188,17 @@ resource "helm_release" "karpenter" {
   }
 
   set {
-    name  = "clusterName"
+    name  = "settings.clusterName"
     value = aws_eks_cluster.demo_cluster.name
   }
 
   set {
-    name  = "clusterEndpoint"
+    name  = "settings.clusterEndpoint"
     value = aws_eks_cluster.demo_cluster.endpoint
   }
 
   set {
-    name  = "aws.defaultInstanceProfile"
+    name  = "settings.aws.defaultInstanceProfile"
     value = aws_iam_instance_profile.karpenter.name
   }
 
