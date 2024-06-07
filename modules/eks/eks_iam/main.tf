@@ -13,17 +13,18 @@ resource "aws_iam_role" "eks_cluster_role" {
   })
 }
 
+resource "aws_iam_policy_attachment" "eks_cluster_policy_attachment" {
+  name       = "${var.project_name}_AmazonEKSClusterPolicy"
+  roles      = [aws_iam_role.eks_cluster_role.name]
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
 resource "aws_iam_policy_attachment" "eks_service_policy_attachment" {
   name       = "${var.project_name}_AmazonEKSServicePolicy"
   roles      = [aws_iam_role.eks_cluster_role.name]
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
 }
 
-resource "aws_iam_policy_attachment" "eks_cluster_policy_attachment" {
-  name       = "${var.project_name}_AmazonEKSClusterPolicy"
-  roles      = [aws_iam_role.eks_cluster_role.name]
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-}
 
 
 # EKS node group role

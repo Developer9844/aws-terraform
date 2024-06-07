@@ -26,7 +26,9 @@ resource "aws_subnet" "public-subnet-1" {
   map_public_ip_on_launch = var.public_ip
 
   tags = {
-    Name = "public-subnet-1"
+    "Name"                      = "public-us-east-1a"
+    "kubernetes.io/role/elb"    = "1"
+    "kubernetes.io/cluster/eks" = "owned"
   }
 }
 
@@ -39,7 +41,9 @@ resource "aws_subnet" "public-subnet-2" {
   map_public_ip_on_launch = var.public_ip
 
   tags = {
-    Name = "public-subnet-2"
+    "Name"                      = "public-us-east-1b"
+    "kubernetes.io/role/elb"    = "1"
+    "kubernetes.io/cluster/eks" = "owned"
   }
 }
 
@@ -80,7 +84,9 @@ resource "aws_subnet" "private-subnet-1" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "private-subnet-1"
+    "Name"                            = "private-us-east-1a"
+    "kubernetes.io/role/internal-elb" = "1"
+    "kubernetes.io/cluster/eks"       = "owned"
   }
 }
 
@@ -93,7 +99,9 @@ resource "aws_subnet" "private-subnet-2" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "private-subnet-2"
+    "Name"                            = "private-us-east-1b"
+    "kubernetes.io/role/internal-elb" = "1"
+    "kubernetes.io/cluster/eks"       = "owned"
   }
 }
 
@@ -142,18 +150,21 @@ resource "aws_security_group" "s_g" {
   vpc_id = aws_vpc.my-vpc.id
 
   tags = {
-    Name = "demo-security-group"
+    Name                     = "my-security-group"
+    "karpenter.sh/discovery" = var.cluster_name
+  }
+  dynamic "ingress" {
+    for_each = var.ingress_rules
+    content {
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+      description = ingress.value.description
+    }
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "ingress_rule" {
-  security_group_id = aws_security_group.s_g.id
-  ip_protocol       = "tcp"
-  cidr_ipv4         = aws_vpc.my-vpc.cidr_block
-  from_port         = 22
-  to_port           = 22
-
-}
 
 resource "aws_vpc_security_group_egress_rule" "egress_rule_ipv4" {
   security_group_id = aws_security_group.s_g.id

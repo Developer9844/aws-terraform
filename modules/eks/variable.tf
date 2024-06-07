@@ -1,4 +1,6 @@
 variable "private_subnet_ids" {}
+variable "aws_profile" {}
+variable "region" {}
 variable "project_name" {}
 variable "instance_types" {
   default = "t3.medium"

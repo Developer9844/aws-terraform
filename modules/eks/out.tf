@@ -31,3 +31,5 @@ output "eks_cluster_name" {
 output "certificate_authority_data" {
   value = aws_eks_cluster.demo_cluster.certificate_authority[0].data
 }
+
+

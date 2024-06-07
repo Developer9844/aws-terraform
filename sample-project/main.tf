@@ -2,11 +2,13 @@
 
 module "vpc_demo" {
   source          = "../modules/vpc"
+  cluster_name    = var.cluster_name
   region          = var.region
   project_name    = var.project_name
   cidr_block      = var.cidr_block
   az_public_cidr  = var.az_public_cidr
   az_private_cidr = var.az_private_cidr
+  ingress_rules   = var.ingress_rules
 
 }
 
@@ -32,6 +34,8 @@ module "eks_cluster" {
   private_subnet_ids = module.vpc_demo.private_subnet_ids
   sg_id              = module.vpc_demo.sg_id
   project_name       = var.project_name
+  aws_profile        = var.aws_profile
+  region             = var.region
 }
 
 

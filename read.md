@@ -1,1 +1,1 @@
-terraform output private_key >> ../my_key
+terraform output private_key > ../my_key
