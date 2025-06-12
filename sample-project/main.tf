@@ -39,9 +39,3 @@ module "eks_cluster" {
   aws_account_id = var.aws_account_id
 }
 
-
-# module "karpenter" {
-#   source       = "../modules/karpenter"
-#   cluster_name = var.cluster_name
-#   project_name = var.project_name
-# }
