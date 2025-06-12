@@ -1,0 +1,10 @@
+variable "project_name" {}
+variable "region" {}
+variable "aws_profile" {}
+variable "aws_account_id" {}
+variable "aws_iam_openid_connect_provider_arn" {}
+variable "aws_iam_openid_connect_provider_url" {}
+variable "eks_cluster_name" {}
+variable "eks_cluster_endpoint" {}
+variable "cluster_ca_certificate" {}
+variable "eks_nodegroup_role_name" {}

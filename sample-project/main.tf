@@ -26,16 +26,51 @@ module "vpc_demo" {
 #   sg_id         = module.vpc_demo.sg_id
 # }
 
-
-
-module "eks_cluster" {
-  source             = "../modules/eks"
-  node_group_name    = var.node_group_name
-  private_subnet_ids = module.vpc_demo.private_subnet_ids
-  sg_id              = module.vpc_demo.sg_id
-  project_name       = var.project_name
-  aws_profile        = var.aws_profile
-  region             = var.region
-  aws_account_id = var.aws_account_id
+module "iam" {
+  source       = "../modules/iam"
+  project_name = var.project_name
 }
 
+module "eks_cluster" {
+  source                 = "../modules/eks"
+  region                 = var.region
+  instance_types         = var.instance_types
+  aws_profile            = var.aws_profile
+  aws_account_id         = var.aws_account_id
+  eks_cluster_role_arn   = module.iam.eks_cluster_role_arn
+  eks_nodegroup_role_arn = module.iam.eks_nodegroup_role_arn
+  project_name           = var.project_name
+  private_subnet_ids     = module.vpc_demo.private_subnet_ids
+  node_group_name        = var.node_group_name
+  sg_id                  = module.vpc_demo.sg_id
+}
+
+
+provider "helm" {
+  kubernetes {
+    host                   = module.eks_cluster.eks_cluster_endpoint
+    cluster_ca_certificate = base64decode(module.eks_cluster.cluster_ca_certificate)
+
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      args        = ["--profile", var.aws_profile, "eks", "get-token", "--cluster-name", module.eks_cluster.eks_cluster_name, "--region", "us-east-1"]
+      command     = "aws"
+    }
+  }
+}
+
+module "karpenter" {
+  source                              = "../modules/karpenter"
+  project_name                        = var.project_name
+  aws_profile                         = var.aws_profile
+  aws_account_id                      = var.aws_account_id
+  region                              = var.region
+  eks_cluster_name                    = module.eks_cluster.eks_cluster_name
+  eks_cluster_endpoint                = module.eks_cluster.eks_cluster_endpoint
+  aws_iam_openid_connect_provider_arn = module.eks_cluster.aws_iam_openid_connect_provider_arn
+  aws_iam_openid_connect_provider_url = module.eks_cluster.aws_iam_openid_connect_provider_url
+  cluster_ca_certificate              = module.eks_cluster.cluster_ca_certificate
+  eks_nodegroup_role_name             = module.iam.eks_nodegroup_role_name
+
+  depends_on = [ module.eks_cluster ]
+}

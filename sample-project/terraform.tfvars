@@ -4,9 +4,10 @@ project_name  = "EKS-By-Terraform"
 key_name      = "my_key"
 ami           = "ami-0e001c9271cf7f3b9"
 instance_type = "t2.micro"
-cluster_name  = "EKS-By-Terraform-eks"
+cluster_name  = "EKS-By-Terraform"
 aws_profile   = "ankush-katkurwar30"
 aws_account_id = 600748199510
+
 
 ingress_rules = {
   http = {

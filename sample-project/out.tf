@@ -17,13 +17,7 @@ output "eks_cluster_endpoint" {
   value = module.eks_cluster.eks_cluster_endpoint
 }
 
-output "oidc_url" {
-  value = module.eks_cluster.oidc_url
-}
 
-output "oidc_arn" {
-  value = module.eks_cluster.oidc_arn
-}
 
 output "aws_profile" {
   value = var.aws_profile

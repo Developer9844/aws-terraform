@@ -37,11 +37,11 @@ spec:
   amiFamily: AL2
   amiSelectorTerms:
   - id: ami-0f68f818ed5e80371
-  role: eks_nodegroup_role
+  role: EKS-By-Terraform-NodeGroup-Role
   subnetSelectorTerms:
     - tags:
-        karpenter.sh/discovery: EKS-By-Terraform-eks
+        karpenter.sh/discovery: EKS-By-Terraform
   securityGroupSelectorTerms:
     - tags:
-        karpenter.sh/discovery: EKS-By-Terraform-eks
+        karpenter.sh/discovery: EKS-By-Terraform
   
