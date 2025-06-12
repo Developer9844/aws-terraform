@@ -76,3 +76,11 @@ resource "aws_iam_role_policy_attachment" "AWSCSIProvisionerRolePolicy_node" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
   role       = aws_iam_role.eks_nodegroup_role.name
 }
+
+
+#################################################################
+
+#################################################################
+
+
+

@@ -2,11 +2,11 @@
 #we will direct this values in main output.tf files in project directory
 
 output "eks_cluster_id" {
-  value = aws_eks_cluster.demo_cluster.id
+  value = aws_eks_cluster.eksCluster.id
 }
 
 output "eks_cluster_endpoint" {
-  value = aws_eks_cluster.demo_cluster.endpoint
+  value = aws_eks_cluster.eksCluster.endpoint
 }
 
 # output "aws_iam_openid_connect_provider" {
@@ -14,7 +14,7 @@ output "eks_cluster_endpoint" {
 # }
 
 output "eks_cluster_profile" {
-  value = module.eks_iam.instance_profile_karpenter.arn
+  value = module.eksIAM.instance_profile_karpenter.arn
 }
 
 output "oidc_url" {
@@ -25,11 +25,11 @@ output "oidc_arn" {
 }
 
 output "eks_cluster_name" {
-  value = aws_eks_cluster.demo_cluster.name
+  value = aws_eks_cluster.eksCluster.name
 }
 
 output "certificate_authority_data" {
-  value = aws_eks_cluster.demo_cluster.certificate_authority[0].data
+  value = aws_eks_cluster.eksCluster.certificate_authority[0].data
 }
 
 

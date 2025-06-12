@@ -1,6 +1,7 @@
 variable "region" {}
 variable "region_name" {}
 variable "project_name" {}
+variable "aws_account_id" {}
 
 variable "cidr_block" {
   type    = string

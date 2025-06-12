@@ -36,6 +36,7 @@ module "eks_cluster" {
   project_name       = var.project_name
   aws_profile        = var.aws_profile
   region             = var.region
+  aws_account_id = var.aws_account_id
 }
 
 

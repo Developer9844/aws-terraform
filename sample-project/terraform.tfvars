@@ -1,11 +1,12 @@
 region        = "us-east-1"
 region_name   = "virginia"
-project_name  = "sample-project-terraform"
+project_name  = "EKS-By-Terraform"
 key_name      = "my_key"
 ami           = "ami-0e001c9271cf7f3b9"
 instance_type = "t2.micro"
-cluster_name  = "eks"
-aws_profile   = "my_personal_aws"
+cluster_name  = "EKS-By-Terraform-eks"
+aws_profile   = "ankush-katkurwar30"
+aws_account_id = 600748199510
 
 ingress_rules = {
   http = {

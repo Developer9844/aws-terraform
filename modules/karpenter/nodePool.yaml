@@ -1,4 +1,4 @@
-apiVersion: karpenter.sh/v1beta1
+apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
   name: default
@@ -11,30 +11,37 @@ spec:
       requirements:
         - key: karpenter.sh/capacity-type
           operator: In
-          values: ["spot"]
+          values: ["on-demand", "spot"]
         - key: "node.kubernetes.io/instance-type"
           operator: In
-          values: ["c5.large", "m5.large", "r5.large", "m5.xlarge"]
+          values: ["c5.large", "m5.large", "c5.xlarge", "m5.xlarge"]
+        - key: "topology.kubernetes.io/zone"
+          operator: In
+          values: ["us-east-1a", "us-east-1b"]  # match your subnets
       nodeClassRef:
+        group: karpenter.k8s.aws
+        kind: EC2NodeClass
         name: default
   limits:
     cpu: "1000"
     memory: 1000Gi
   disruption:
-    consolidationPolicy: WhenUnderutilized
-    expireAfter: 720h # 30 * 24h = 720h
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 1m
 ---
-apiVersion: karpenter.k8s.aws/v1alpha1
+apiVersion: karpenter.k8s.aws/v1
 kind: EC2NodeClass
 metadata:
   name: default
 spec:
-  amiFamily: AL2 # Amazon Linux 2
-  role: karpenter_role
+  amiFamily: AL2
+  amiSelectorTerms:
+  - id: ami-0f68f818ed5e80371
+  role: eks_nodegroup_role
   subnetSelectorTerms:
     - tags:
-        karpenter.sh/discovery: eks
+        karpenter.sh/discovery: EKS-By-Terraform-eks
   securityGroupSelectorTerms:
     - tags:
-        karpenter.sh/discovery: eks
+        karpenter.sh/discovery: EKS-By-Terraform-eks
   

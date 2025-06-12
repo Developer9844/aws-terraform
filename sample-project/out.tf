@@ -24,3 +24,7 @@ output "oidc_url" {
 output "oidc_arn" {
   value = module.eks_cluster.oidc_arn
 }
+
+output "aws_profile" {
+  value = var.aws_profile
+}

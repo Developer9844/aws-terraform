@@ -29,6 +29,7 @@ resource "aws_subnet" "public-subnet-1" {
     "Name"                      = "public-us-east-1a"
     "kubernetes.io/role/elb"    = "1"
     "kubernetes.io/cluster/eks" = "owned"
+    "karpenter.sh/discovery"    = var.cluster_name
   }
 }
 
@@ -44,6 +45,7 @@ resource "aws_subnet" "public-subnet-2" {
     "Name"                      = "public-us-east-1b"
     "kubernetes.io/role/elb"    = "1"
     "kubernetes.io/cluster/eks" = "owned"
+    "karpenter.sh/discovery"    = var.cluster_name
   }
 }
 
@@ -87,6 +89,7 @@ resource "aws_subnet" "private-subnet-1" {
     "Name"                            = "private-us-east-1a"
     "kubernetes.io/role/internal-elb" = "1"
     "kubernetes.io/cluster/eks"       = "owned"
+    "karpenter.sh/discovery"          = var.cluster_name
   }
 }
 
@@ -102,6 +105,7 @@ resource "aws_subnet" "private-subnet-2" {
     "Name"                            = "private-us-east-1b"
     "kubernetes.io/role/internal-elb" = "1"
     "kubernetes.io/cluster/eks"       = "owned"
+    "karpenter.sh/discovery"          = var.cluster_name
   }
 }
 
